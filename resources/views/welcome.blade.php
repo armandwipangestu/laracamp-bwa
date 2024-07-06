@@ -157,7 +157,7 @@
         <div class="container">
             <div class="row item-step pb-70">
                 <div class="col-lg-6 col-12 text-center">
-                    <img src="/assets/images/step1.png" class="cover" alt="">
+                    <img src="{{ asset('images/step1.png') }}" class="cover" alt="">
                 </div>
                 <div class="col-lg-6 col-12 text-left copywriting">
                     <p class="story">
