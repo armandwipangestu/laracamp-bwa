@@ -33,15 +33,15 @@
                                 @csrf
                                 <div class="mb-4">
                                     <label class="form-label">Full Name</label>
-                                    <input name="name" type="text" class="form-control">
+                                    <input name="name" value="{{ Auth::user()->name }}" type="text" class="form-control">
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Email Address</label>
-                                    <input name="email" type="email" class="form-control">
+                                    <input name="email" value="{{ Auth::user()->email }}" type="email" class="form-control">
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Occupation</label>
-                                    <input name="occupation" type="text" class="form-control">
+                                    <input name="occupation" value="{{ Auth::user()->occupation }}" type="text" class="form-control">
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Card Number</label>
