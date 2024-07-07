@@ -25,8 +25,13 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Camp $camp)
+    public function create(Request $request, Camp $camp)
     {
+        if ($camp->isRegistered) {
+            $request->session()->flash('error', "You already registered on {$camp->title} camp.");
+            return redirect(route('dashboard'));
+        }
+
         return view('checkout.create', [
             "camp" => $camp
         ]);
