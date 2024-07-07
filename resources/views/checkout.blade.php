@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-lg-1 col-12"></div>
                         <div class="col-lg-6 col-12">
-                            <form action="#" class="basic-form">
+                            <form action="{{ route('success-checkout') }}" class="basic-form">
                                 <div class="mb-4">
                                     <label for="exampleInputEmail1" class="form-label">Full Name</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
