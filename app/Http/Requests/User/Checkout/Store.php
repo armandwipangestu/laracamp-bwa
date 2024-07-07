@@ -25,7 +25,10 @@ class Store extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . Auth::id() . ',id',
+            'occupation' => 'required|string',
+            'card_number' => 'required|numeric|digits_between:8,16'
         ];
     }
 }

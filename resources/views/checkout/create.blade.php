@@ -40,25 +40,40 @@
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Email Address</label>
-                                    <input name="email" value="{{ Auth::user()->email }}" type="email" class="form-control">
+                                    <input name="email" value="{{ Auth::user()->email }}" type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}">
+                                    @if ($errors->has('email'))
+                                        <p class="text-danger">{{ $errors->first('email') }}</p>
+                                    @endif
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Occupation</label>
-                                    <input name="occupation" value="{{ Auth::user()->occupation }}" type="text" class="form-control">
+                                    <input name="occupation" value="{{ old('occupation') ?: Auth::user()->occupation }}" type="text" class="form-control {{ $errors->has('occupation') ? 'is-invalid' : '' }}">
+                                    @if ($errors->has('occupation'))
+                                        <p class="text-danger">{{ $errors->first('occupation') }}</p>
+                                    @endif
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Card Number</label>
-                                    <input name="card_number" type="number" class="form-control">
+                                    <input name="card_number" value="{{ old('card_number') ?: '' }}" type="number" class="form-control {{ $errors->has('card_number') ? 'is-invalid' : '' }}">
+                                    @if ($errors->has('card_number'))
+                                        <p class="text-danger">{{ $errors->first('card_number') }}</p>
+                                    @endif
                                 </div>
                                 <div class="mb-5">
                                     <div class="row">
                                         <div class="col-lg-6 col-12">
                                             <label class="form-label">Expired</label>
-                                            <input name="expired" type="month" class="form-control">
+                                            <input name="expired" value="{{ old('expired') ?: '' }}" type="month" class="form-control {{ $errors->has('expired') ? 'is-invalid' : '' }}">
+                                            @if ($errors->has('expired'))
+                                                <p class="text-danger">{{ $errors->first('expired') }}</p>
+                                            @endif
                                         </div>
                                         <div class="col-lg-6 col-12">
                                             <label class="form-label">CVC</label>
-                                            <input name="cvc" type="number" class="form-control" maxlength="3">
+                                            <input name="cvc" value="{{ old('cvc') ?: '' }}" type="number" class="form-control {{ $errors->has('cvc') ? 'is-invalid' : '' }}" maxlength="3">
+                                            @if ($errors->has('cvc'))
+                                                <p class="text-danger">{{ $errors->first('cvc') }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
