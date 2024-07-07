@@ -11,6 +11,7 @@
         "laravel/breeze": "1.9.2",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
+        "laravel/socialite": "5.2.5",
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
