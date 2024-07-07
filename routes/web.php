@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,11 @@ Route::get('/checkout', function () {
 Route::get('/success-checkout', function () {
     return view('success_checkout');
 })->name('success-checkout');
+
+// Socialite Routes
+Route::get('sign-in-google', [UserController::class, 'google'])->name('user.login.google');
+// route `auth/google/callback` harus sama dengan yang di set di Credentials OAuth di GCP dan juga di .env
+Route::get('auth/google/callback', [UserController::class, 'handleProviderCallback'])->name('user.google.callback');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
