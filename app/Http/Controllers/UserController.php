@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\User\AfterRegister;
 
 class UserController extends Controller
