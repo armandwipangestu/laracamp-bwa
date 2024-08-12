@@ -11,7 +11,7 @@ class Checkout extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'camp_id', 'payment_status', 'midtrans_url', 'midtrans_booking'];
+    protected $fillable = ['user_id', 'camp_id', 'payment_status', 'midtrans_url', 'midtrans_booking_code'];
 
     public function setExpiredAttribute($value)
     {

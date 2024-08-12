@@ -21,7 +21,7 @@ class CheckoutController extends Controller
         Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         // Midtrans\Config::$clientKey = env('MIDTRANS_CLIENT_KEY');
         Midtrans\Config::$isProduction = env('MIDTRANS_IS_PRODUCTION');
-        Midtrans\Config::$isSanitized = env('MIDTRANS_IS_SANATIZED');
+        Midtrans\Config::$isSanitized = env('MIDTRANS_IS_SANITIZED');
         Midtrans\Config::$is3ds = env('MIDTRANS_IS_3DS');
     }
 
@@ -71,6 +71,8 @@ class CheckoutController extends Controller
         $user->email = $data['email'];
         $user->name = $data['name'];
         $user->occupation = $data['occupation'];
+        $user->phone = $data['phone'];
+        $user->address = $data['address'];
         $user->save();
 
         // create checkout
@@ -195,7 +197,7 @@ class CheckoutController extends Controller
 
     public function midtransCallback(Request $request)
     {
-        $notif = new Midtrans\Notification();
+        $notif = $request->method() == 'POST' ? new Midtrans\Notification() : Midtrans\Transaction::status($request->order_id);
 
         $transaction_status = $notif->transaction_status;
         $fraud = $notif->fraud_status;
@@ -234,6 +236,6 @@ class CheckoutController extends Controller
         }
 
         $checkout->save();
-        return view('checkout.success');
+        return view('checkout/success');
     }
 }
