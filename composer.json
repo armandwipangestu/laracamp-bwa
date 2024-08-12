@@ -12,7 +12,8 @@
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "5.2.5",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "midtrans/midtrans-php": "^2.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

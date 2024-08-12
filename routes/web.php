@@ -33,6 +33,9 @@ Route::get('sign-in-google', [UserController::class, 'google'])->name('user.logi
 // route `auth/google/callback` harus sama dengan yang di set di Credentials OAuth di GCP dan juga di .env
 Route::get('auth/google/callback', [UserController::class, 'handleProviderCallback'])->name('user.google.callback');
 
+// Midtrans routes
+Route::get('payment/success', [CheckoutController::class, 'midtransCallback']);
+Route::post('payment/success', [CheckoutController::class, 'midtransCallback']);
 
 Route::middleware(['auth'])->group(function () {
     // checkout routes
