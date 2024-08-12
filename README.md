@@ -1,63 +1,316 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<h1 align="center">Laracamp</h1>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
 
-## About Laravel
+![Laravel](https://img.shields.io/badge/-Laravel-05122A?style=flat&logo=laravel)&nbsp;
+![Socialite](https://img.shields.io/badge/-Laravel%20Socialite-05122A?style=flat&logo=auth0)&nbsp;
+![Midtrans](https://img.shields.io/badge/-Midtrans-05122A?style=flat&logo=visa)&nbsp;
+![Mailtrap](https://img.shields.io/badge/-Mailtrap-05122A?style=flat&logo=mailtrap)&nbsp;
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+</div>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<img src="assets/preview.png" alt="Preview">
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<p align="center">This repository is web application that aims to provide various features such as authentication, authorization, payment gateway, and email integration. This app is built using Laravel, Breeze (Authentication and Authorization), Socialite (OAuth Google), Midtrans (Payment Gateway), Mailtrap (Email)</p>
 
-## Learning Laravel
+## Table of Contents
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   [Tech Stack](#tech-stack)
+-   [Entity Relationship Diagram](#entity-relationship-diagram-erd)
+-   [Running on Localhost](#running-on-localhost)
+    -   [Clone this repository](#clone-this-repository)
+    -   [Copy & fill .env](#copy--fill-env)
+    -   [Application URL](#application-url)
+    -   [Database Configuration](#database-configuration)
+    -   [Email Configuration](#email-configuration)
+    -   [OAuth Google Configuration](#oauth-google-configuration)
+    -   [Midtrans Payment Gateway Configuration](#midtrans-payment-gateway-configuration)
+    -   [Install dependency package](#install-dependency-package)
+    -   [Generate key](#generate-key)
+    -   [Running the migration and seeder](#running-the-migration-and-seeder)
+    -   [Running the application](#running-the-application)
+-   [Git Flow](#git-flow)
+    -   [Initialize](#initialize)
+    -   [Creating new feature](#creating-new-feature)
+    -   [Finish the feature](#finish-the-feature)
+    -   [Create a new release](#create-a-new-release)
+    -   [Finish the release](#finish-the-release)
+-   [License](#license)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tech Stack
 
-## Laravel Sponsors
+-   [Laravel](https://laravel.com) (`Framework`): Laravel is a PHP framework designed for web development with an expressive and elegant syntax. It provides a comprehensive ecosystem with features such as routing, sessions, caching, and authentication, enabling developers to build robust and scalable web applications easily.
+-   [Breeze](https://github.com/laravel/breeze) (`Authentication and Authorization`): Laravel Breeze is a simple and minimal starter kit for authentication. It offers basic implementations for login, registration, password reset, and email verification, allowing developers to quickly and easily integrate authentication into their applications.
+-   [Socialite](https://github.com/laravel/socialite) (`OAuth Google`): Laravel Socialite provides a simple and expressive way to integrate OAuth authentication with various platforms, including Google. With Socialite, you can set up user login through their Google accounts with just a few lines of code.
+-   [Midtrans](https://midtrans.com) (`Payment Gateway`): Midtrans is a payment gateway solution that allows the integration of online payment methods into your application. Supporting various payment methods like credit cards, bank transfers, and e-wallets, Midtrans helps you securely and easily accept payments.
+-   [Mailtrap](https://mailtrap.io) (`Email`): Mailtrap is an email testing service designed to capture test emails sent from your application. With Mailtrap, you can verify and analyze emails without the risk of sending them to real users, making it invaluable in development and testing environments.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Entity Relationship Diagram (ERD)
 
-### Premium Partners
+![Entity Relationship Diagram (ERD)](assets/erd.png)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+## Running on Localhost
 
-## Contributing
+### Clone this repository
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+> **NOTE**: If you are using Laragon or XAMPP you can specify the clone directory destination to your `www` or `htdocs`, for example
+>
+> ```bash
+> git clone https://github.com/armandwipangestu/laracamp-bwa.git Z:/laragon/www/laracamp-bwa && cd laracamp-bwa
+> ```
+>
+> or
+>
+> ```bash
+> git clone https://github.com/armandwipangestu/laracamp-bwa.git C:/xampp/htdocs/laracamp-bwa && cd laracamp-bwa
+> ```
+>
+> But if you just running using php web server you can place the clone directory anywhere
 
-## Code of Conduct
+```bash
+git clone https://github.com/armandwipangestu/laracamp-bwa.git && cd laracamp-bwa
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Copy & Fill .env
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+After `.env.example` copied to `.env` now fill with your own configuration at this variable
+
+### Application URL
+
+You can change this `APP_URL` variable with your own configuration, for example if I running with laragon, I use pretty url which is will create a Virtual Host and mapping the local domain to the web server like `https://laracamp-bwa.dev`.
+
+If you running with the php web server you can just edit this variable with this value `http://localhost:8000`
+
+```bash
+APP_URL=http://localhost
+```
+
+### Database Configuration
+
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### Email Configuration
+
+At this mail variable you can just signup and signin on [mailtrap.io](https://mailtrap.io) and then go to `inboxes` menu. At that page you will see the Integration Tab like this
+
+![Mailtrap](assets/mailtrap.png)
+
+After you have your own configuration just fill the `.env` variable on mail configuration using that credentials
+
+> **NOTE**: Optional configuration
+>
+> ```bash
+> MAIL_ENCRYPTION=tls
+> MAIL_FROM_ADDRESS=noreply@laracamp.dev
+> ```
+
+```bash
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=null
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+### OAuth Google Configuration
+
+For setup this OAuth variable you must be create a new Google Cloud Project on [console.cloud.google.com](https://console.cloud.google.com)
+
+After creating a Google Cloud Project, you can go to the `API & Service` > `OAuth consent screen` page like this
+
+![GCP OAuth consent screen](assets/gcp-oauth-consent-screen.png)
+
+Still on that page, you can scroll down and fill list domain on `Authorized domains` section. This list domain will be use for the callback.
+
+> **NOTE**: You can add list domain on this section, for example I use laragon pretty url so I can add `laravel-bwa.dev`. Or if you are using php web server you can add `localhost:8000`
+
+![Authorized Domain](assets/gcp-oauth-consent-screen-authorized-domain.png)
+
+Now you can finish the OAuth Google Configuration, you can `Save and Continue` until done.
+
+After the configuration finished, now create the OAuth client credentials at `Credentials` page
+
+![GCP Oauth Create Credentials](assets/gcp-oauth-create-credentials.png)
+
+Choose `Application type` with `Web application` and fill the `Name` section. And then now fill the `Authorized redirect URIs`
+
+> **NOTE**: You can add list domain on this section, for example I use laragon pretty url so I can add `laravel-bwa.dev`. Or if you are using php web server you can add `localhost:8000`. The domain will have endpoint with `/auth/google/callback`
+
+![GCP Oauth Create OAuth Client ID](assets/gcp-oauth-create-oauth-client-id.png)
+
+After all the configuration already fill click `Create`. Now you will see the alert with OAuth Credentials like this
+
+![OAuth Secret](assets/oauth-secret.png)
+
+Now you can fill this variable with that credentials
+
+> **NOTE**: For the `GOOGLE_CLIENT_REDIRECT` you can use this configuration
+>
+> ```bash
+> GOOGLE_CLIENT_REDIRECT=https://localhost:8000/auth/google/callback
+> ```
+>
+> or
+>
+> ```bash
+> GOOGLE_CLIENT_REDIRECT=https://laracamp-bwa.dev/auth/google/callback
+> ```
+
+```bash
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_CLIENT_REDIRECT=
+```
+
+### Midtrans Payment Gateway Configuration
+
+To setup this variable you must be signup and sigin as merchant at [midtrans.com](https://midtrans.com)
+
+After you signup and signin, go to dashboard and change the environment from `Production` to `Sandbox`
+
+In environment `Sandbox` you can go to the `Settings` > `Access Keys` and you will see the configurations for credentials like this
+
+![Midtrans Access Keys](assets/midtrans-access-keys.png)
+
+Now you can fill this variable with that configuration
+
+> **NOTE**: Optional configuration you can change the `Snap Preferences` at `Settings`, this configuration will affect to the view when user see the payment page
+>
+> ![Midtrans Snap Preferences](assets/midtrans-snap-preferences.png)
+
+```bash
+MIDTRANS_SERVER_KEY=
+MIDTRANS_CLIENT_KEY=
+MIDTRANS_IS_PRODUCTION=false
+MIDTRANS_IS_SANITIZED=false
+MIDTRANS_IS_3DS=false
+```
+
+Don't forget to add the `Notification URL` at `Settings` > `Payment`
+
+![Midtrans Payment](assets/midtrans-payment.png)
+
+> **NOTE**: You must use the online url (accessible on the internet), you can use `ngrok` or `vscode` port forwarding
+
+![Midtrans Notification URL](assets/midtrans-notification-url.png)
+
+### Install dependency package
+
+```bash
+composer install
+```
+
+### Generate key
+
+```bash
+php artisan key:generate
+```
+
+### Running the migration and seeder
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+### Running the application
+
+> **NOTE**: If you are using laragon pretty url like me, you can skip this part because it already running on local domain because virtual host. But this part will be use for the port forwarding (ngrok or vscode) and testing midtrans payment
+
+```bash
+php artisan serve
+```
+
+Now you can access the application on `http://localhost:8000`
+
+## Git Flow
+
+### Initialize
+
+Start using git-flow by initializing it inside an existing git repository
+
+> **NOTE**: Before running this command, create a new branch for developing the application
+>
+> ```bash
+> git branch development
+> ```
+
+```bash
+git flow init
+```
+
+Now choose the `main` branch as the production release and `development` branch as the development release
+
+![Git Flow Init](assets/git-flow-init.png)
+
+### Creating new feature
+
+If you want to develop new feature for example `payment-gateway` you can create with git flow with this command
+
+```bash
+git flow feature start payment-gateway
+```
+
+![Git Flow Feature Start](assets/git-flow-feature-start.png)
+
+After creating new feature you can start develop the feature
+
+### Finish the feature
+
+If your feature has been develop and finish, now you can merge the branch feature with the development branch with this command
+
+```bash
+git flow feature finish payment-gateway
+```
+
+![Git Flow Feature Finish](assets/git-flow-feature-finish.png)
+
+### Create a new release
+
+Everytime you finish the feature you can create a new release based on that code with this command
+
+> **NOTE**: The `v1.1.0` is the release name
+
+```bash
+git flow release start v1.1.0
+```
+
+### Finish the release
+
+The release has been created, now you can finish the release with this command
+
+```bash
+git flow release finish 'v1.1.0'
+```
+
+You can add release message for the feature you have been develop, for example `Release Payment Gateway Feature`
+
+![Git Flow Release Finish](assets/git-flow-release-finish.png)
+
+![Git Flow Release Finish 2](assets/git-flow-release-finish-2.png)
+
+Now you can push the local branch repository to the remote repository (`development` and `main` branch)
+
+But the push will not be create a tag and release on remote repository, to create that you must be push the version tag on local repository using this command
+
+```bash
+git push origin v1.1.0
+```
+
+![Git Flow Release Tag](assets/git-flow-release-tag.png)
 
 ## License
 
