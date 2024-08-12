@@ -18,7 +18,6 @@
 -   [Tech Stack](#tech-stack)
 -   [Entity Relationship Diagram](#entity-relationship-diagram-erd)
 -   [Running on Localhost](#running-on-localhost)
-
     -   [Clone this repository](#clone-this-repository)
     -   [Copy & fill .env](#copy--fill-env)
     -   [Application URL](#application-url)
@@ -30,7 +29,12 @@
     -   [Generate key](#generate-key)
     -   [Running the migration and seeder](#running-the-migration-and-seeder)
     -   [Running the application](#running-the-application)
-
+-   [Git Flow](#git-flow)
+    -   [Initialize](#initialize)
+    -   [Creating new feature](#creating-new-feature)
+    -   [Finish the feature](#finish-the-feature)
+    -   [Create a new release](#create-a-new-release)
+    -   [Finish the release](#finish-the-release)
 -   [License](#license)
 
 ## Tech Stack
