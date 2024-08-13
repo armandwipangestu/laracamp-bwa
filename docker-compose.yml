@@ -1,0 +1,75 @@
+services:
+    # Web Server Service
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        ports:
+            - "8000:80"
+        volumes:
+            - "./:/var/www/laracamp-bwa"
+            - "./docker-compose/nginx/conf.d/:/etc/nginx/conf.d"
+        depends_on:
+            - app
+            - db
+
+    # Database Service
+
+    # MySQL
+    db:
+        image: "mysql/mysql-server:8.0"
+        container_name: mysql
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_DATABASE: "${DB_DATABASE}"
+            MYSQL_USER: "${DB_USERNAME}"
+            MYSQL_PASSWORD: "${DB_PASSWORD}"
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - "./mysql/data:/var/lib/mysql"
+    # phpMyAdmin
+    phpmyadmin:
+        image: "phpmyadmin/phpmyadmin"
+        container_name: phpmyadmin
+        ports:
+            - "3400:80"
+        depends_on:
+            - db
+
+    # PostgreSQL
+    # db:
+    #   image: postgres
+    #   container_name: postgres
+    #   ports:
+    #     - '5432:5432'
+    #   environment:
+    #     POSTGRES_DB: '${DB_DATABASE}'
+    #     POSTGRES_USER: '${DB_USERNAME}'
+    #     POSTGRES_PASSWORD: '${DB_PASSWORD}'
+    #   volumes:
+    #     - './postgresql/data:/var/lib/postgresql/data'
+    # pgAdmin
+    # pgadmin:
+    #   image: 'dpage/pgadmin4'
+    #   container_name: pgAdmin
+    #   ports:
+    #     - '5050:80'
+    #   depends_on:
+    #     - db
+    #   environment:
+    #     PGADMIN_DEFAULT_EMAIL: '${MAIL_FROM_ADDRESS}'
+    #     PGADMIN_DEFAULT_PASSWORD: '${DB_PASSWORD}'
+
+    # Application Service
+    app:
+        container_name: "laracamp-bwa"
+        build:
+            context: "./docker-compose/php"
+            dockerfile: Dockerfile
+        volumes:
+            - "./:/var/www/laracamp-bwa"
+        ports:
+            - "9000:9000"
+        working_dir: "/var/www/laracamp-bwa"
