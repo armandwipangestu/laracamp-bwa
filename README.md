@@ -29,6 +29,15 @@
     -   [Generate key](#generate-key)
     -   [Running the migration and seeder](#running-the-migration-and-seeder)
     -   [Running the application](#running-the-application)
+-   [Deployment](#deployment)
+    -   [Virtual Private Server (VPS)](#virtual-private-server-vps)
+        -   [Cloning the repository](#cloning-the-repository)
+        -   [Update Repository & Upgrade Package](#update-repository--upgrade-package)
+        -   [Install necessary package](#install-necessary-package)
+        -   [Install composer](#install-composer)
+        -   [Configure MariaDB](#configure-mariadb)
+        -   [Configure Laravel](#configure-laravel)
+        -   [Configure Nginx](#configure-nginx)
 -   [Git Flow](#git-flow)
     -   [Initialize](#initialize)
     -   [Creating new feature](#creating-new-feature)
@@ -235,6 +244,142 @@ php artisan serve
 ```
 
 Now you can access the application on `http://localhost:8000`
+
+## Deployment
+
+### Virtual Private Server (VPS)
+
+> **NOTE**: Do not forget to open the firewall to HTTP/s (80/443) port
+
+In this VPS I'm using Ubuntu 24.04 LTS on Google Compute Engine
+
+#### Cloning the repository
+
+```bash
+git clone https://github.com/armandwipangestu/laracamp-bwa.git ~/laracamp-bwa
+```
+
+#### Update Repository & Upgrade Package
+
+```bash
+sudo apt update && sudo apt upgrade
+```
+
+#### Install necessary package
+
+```bash
+sudo apt install php-mbstring php-xml php-bcmath php-curl php-cli php-fpm unzip mariadb-server
+```
+
+#### Install composer
+
+```bash
+curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
+HASH=`curl -sS https://composer.github.io/installer.sig` && echo $HASH
+php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+```
+
+#### Configure MariaDB
+
+1. Change default password for root user
+
+```bash
+sudo mariadb -u root -p
+```
+
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_secure_password';
+FLUSH PRIVILEGES;
+```
+
+2. MariaDB secure installation
+
+```bash
+mariadb-secure-installation
+```
+
+3. Create new database and user
+
+```bash
+sudo mariadb -u root -p
+```
+
+```sql
+CREATE database laracamp_bwa;
+CREATE USER user_laracamp_bwa IDENTIFIED BY 'your_secure_password';
+GRANT ALL PRIVILEGES ON `laracamp_bwa`.`*` TO 'user_laracamp_bwa'@'localhost' IDENTIFIED BY 'your_secure_password';
+FLUSH PRIVILEGES;
+```
+
+#### Configure Laravel
+
+1. Install laravel dependency
+
+> **NOTE**: You must be setup your `.env`, you can refer with the localhost setup
+
+```bash
+cd ~/laracamp-bwa && composer install
+```
+
+2. Generate key
+
+```bash
+php artisan key:generate
+```
+
+3. Running the migration and seeder
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+4. Copy or move project to `/var/www/laracamp-bwa`
+
+```bash
+sudo cp ~/laracamp-bwa /var/www/laracamp-bwa
+```
+
+5. Change the user and group owner permission to `www-data`
+
+```bash
+sudo chown -R www-data:www-data /var/www/laracamp-bwa
+```
+
+6. Change the permission mode for `storage` and `bootstrap/cache` folder
+
+```bash
+sudo chmod -R 755 /var/www/laracamp-bwa/storage
+sudo chmod -R 755 /var/www/laracamp-bwa/bootstrap/cache
+```
+
+#### Configure Nginx
+
+1. Disable default nginx configuration
+
+```bash
+sudo rm /etc/nginx/sites-enabled/default
+```
+
+2. Copy nginx configuration
+
+```bash
+sudo cp ~/laracamp-bwa/nginx/laracamp.conf /etc/nginx/sites-available/laracamp.conf
+```
+
+3. Enable nginx configuration
+
+```bash
+sudo ln -s /etc/nginx/sites-avilable/laracamp.conf /etc/nginx/sites-enable/laracamp.conf
+```
+
+4. Restart Nginx service
+
+```bash
+sudo systemctl restart nginx
+```
+
+Now your application has been running.
 
 ## Git Flow
 
