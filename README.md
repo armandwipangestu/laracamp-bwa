@@ -308,7 +308,7 @@ sudo mariadb -u root -p
 ```sql
 CREATE database laracamp_bwa;
 CREATE USER user_laracamp_bwa IDENTIFIED BY 'your_secure_password';
-GRANT ALL PRIVILEGES ON `laracamp_bwa`.`*` TO 'user_laracamp_bwa'@'localhost' IDENTIFIED BY 'your_secure_password';
+GRANT ALL PRIVILEGES ON `laracamp_bwa`.`*` TO 'user_laracamp_bwa'@'%' IDENTIFIED BY 'your_secure_password';
 FLUSH PRIVILEGES;
 ```
 
