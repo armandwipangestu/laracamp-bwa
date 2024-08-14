@@ -268,7 +268,7 @@ sudo apt update && sudo apt upgrade
 #### Install necessary package
 
 ```bash
-sudo apt install php-mbstring php-xml php-bcmath php-curl php-cli php-fpm unzip mariadb-server
+sudo apt install php-mbstring php-xml php-bcmath php-curl php-cli php-fpm php-mysql unzip mariadb-server nginx
 ```
 
 #### Install composer
@@ -308,7 +308,7 @@ sudo mariadb -u root -p
 ```sql
 CREATE database laracamp_bwa;
 CREATE USER user_laracamp_bwa IDENTIFIED BY 'your_secure_password';
-GRANT ALL PRIVILEGES ON `laracamp_bwa`.`*` TO 'user_laracamp_bwa'@'%' IDENTIFIED BY 'your_secure_password';
+GRANT ALL PRIVILEGES ON `laracamp_bwa`.* TO `user_laracamp_bwa`@`%`;
 FLUSH PRIVILEGES;
 ```
 
@@ -337,7 +337,7 @@ php artisan migrate:fresh --seed
 4. Copy or move project to `/var/www/laracamp-bwa`
 
 ```bash
-sudo cp ~/laracamp-bwa /var/www/laracamp-bwa
+sudo cp -R ~/laracamp-bwa /var/www/laracamp-bwa
 ```
 
 5. Change the user and group owner permission to `www-data`
@@ -370,7 +370,7 @@ sudo cp ~/laracamp-bwa/nginx/laracamp.conf /etc/nginx/sites-available/laracamp.c
 3. Enable nginx configuration
 
 ```bash
-sudo ln -s /etc/nginx/sites-avilable/laracamp.conf /etc/nginx/sites-enable/laracamp.conf
+sudo ln -s /etc/nginx/sites-available/laracamp.conf /etc/nginx/sites-enabled/laracamp.conf
 ```
 
 4. Restart Nginx service
