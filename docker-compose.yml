@@ -4,9 +4,9 @@ services:
         image: nginx:alpine
         container_name: nginx
         ports:
-            - "8000:80"
+            - "8080:80"
         volumes:
-            - "./:/var/www/laracamp-bwa"
+            - ".:/var/www/laracamp-bwa"
             - "./docker-compose/nginx/conf.d/:/etc/nginx/conf.d"
         depends_on:
             - app
