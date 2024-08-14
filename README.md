@@ -30,6 +30,12 @@
     -   [Running the migration and seeder](#running-the-migration-and-seeder)
     -   [Running the application](#running-the-application)
 -   [Deployment](#deployment)
+    -   [Container (Docker Compose)](#container-docker-compose)
+        -   [Setup Docker](#setup-docker)
+        -   [Clone the repository](#clone-the-repository)
+        -   [Setup .env before build the image](#setup-env-before-build-the-image)
+        -   [Build and run the container](#build-and-run-the-container)
+        -   [Setup container app (laravel)](#setup-container-app-laravel)
     -   [Virtual Private Server (VPS)](#virtual-private-server-vps)
         -   [Cloning the repository](#cloning-the-repository)
         -   [Update Repository & Upgrade Package](#update-repository--upgrade-package)
@@ -217,6 +223,10 @@ Don't forget to add the `Notification URL` at `Settings` > `Payment`
 
 ![Midtrans Notification URL](assets/midtrans-notification-url.png)
 
+> **NOTE**: If you use snap preferences, you must set the redirect url at this menu `Settings` > `Snap Preferences` > `System Settings` > `Redirection Settings`
+>
+> ![Midtrans Snap Preferences Redirect](assets/midtrans-snap-preferences-redirect.png)
+
 ### Install dependency package
 
 ```bash
@@ -246,6 +256,91 @@ php artisan serve
 Now you can access the application on `http://localhost:8000`
 
 ## Deployment
+
+### Container (Docker Compose)
+
+In this container I'm using VPS Ubuntu 24.04 LTS on Google Compute Engine
+
+#### Setup Docker
+
+1. Add docker repository
+
+```bash
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+2. Install docker package
+
+```bash
+sudo apt update && apt-cache policy docker-ce && sudo apt install docker-ce
+sudo systemctl status docker
+```
+
+3. Add current user to docker group
+
+> **NOTE**: This setup will make your current user can run docker without `sudo` command
+
+```bash
+sudo usermod -aG docker ${USER} && su - ${USER}
+```
+
+4. Install docker compose
+
+```bash
+sudo apt update && sudo apt install docker-ce-cli containerd.io docker-compose-plugin docker-compose
+docker compose version
+```
+
+#### Clone the repository
+
+```bash
+git clone https://github.com/armandwipangestu/laracamp-bwa.git ~/laracamp-bwa
+```
+
+#### Setup .env before build the image
+
+> **NOTE**: You must be setup your `.env`, you can refer with the localhost setup
+
+```bash
+cd ~/laracamp-bwa
+cp .env.example .env
+```
+
+#### Build and run the container
+
+```bash
+docker compose up --build -d
+```
+
+#### Setup container app (laravel)
+
+1. Install dependency package
+
+```bash
+docker compose exec app composer install
+```
+
+2. Generate key
+
+```bash
+docker compose exec app php artisan key:generate
+```
+
+3. Running the migration and seeder
+
+```bash
+docker compose exec app php artisan migrate:fresh --seed
+```
+
+Now you can access the application with your own ip address, example: `http://123.123.123.123`
+
+> **NOTE**: If you got an error because permission denied at directory `/var/www/laracamp-bwa/storage` and `/var/www/laracamp-bwa/bootstrap/cache`. You can run this command
+>
+> ```bash
+> docker compose exec app chown -R www-data:www-data /var/www/app/storage
+> docker compose exec app chown -R www-data:www-data /var/www/app/bootstrap/cache
+> ```
 
 ### Virtual Private Server (VPS)
 
