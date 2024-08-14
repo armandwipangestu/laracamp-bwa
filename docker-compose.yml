@@ -68,8 +68,10 @@ services:
         build:
             context: "./docker-compose/php"
             dockerfile: Dockerfile
-        volumes:
-            - "./:/var/www/laracamp-bwa"
         ports:
             - "9000:9000"
         working_dir: "/var/www/laracamp-bwa"
+        environment:
+            DB_HOST: "db"
+        volumes:
+            - "./:/var/www/laracamp-bwa"
