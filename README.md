@@ -4,6 +4,7 @@
 
 ![Laravel](https://img.shields.io/badge/-Laravel-05122A?style=flat&logo=laravel)&nbsp;
 ![Socialite](https://img.shields.io/badge/-Laravel%20Socialite-05122A?style=flat&logo=auth0)&nbsp;
+![Docker](https://img.shields.io/badge/-Docker-05122A?style=flat&logo=docker)&nbsp;
 ![Midtrans](https://img.shields.io/badge/-Midtrans-05122A?style=flat&logo=visa)&nbsp;
 ![Mailtrap](https://img.shields.io/badge/-Mailtrap-05122A?style=flat&logo=mailtrap)&nbsp;
 
@@ -54,6 +55,7 @@
 -   [Laravel](https://laravel.com) (`Framework`): Laravel is a PHP framework designed for web development with an expressive and elegant syntax. It provides a comprehensive ecosystem with features such as routing, sessions, caching, and authentication, enabling developers to build robust and scalable web applications easily.
 -   [Breeze](https://github.com/laravel/breeze) (`Authentication and Authorization`): Laravel Breeze is a simple and minimal starter kit for authentication. It offers basic implementations for login, registration, password reset, and email verification, allowing developers to quickly and easily integrate authentication into their applications.
 -   [Socialite](https://github.com/laravel/socialite) (`OAuth Google`): Laravel Socialite provides a simple and expressive way to integrate OAuth authentication with various platforms, including Google. With Socialite, you can set up user login through their Google accounts with just a few lines of code.
+-   [Docker](https://www.docker.com/) (`Container`): Docker is a platform designed to help developers build, share, and run container applications. We handle the tedious setup, so you can focus on the code.
 -   [Midtrans](https://midtrans.com) (`Payment Gateway`): Midtrans is a payment gateway solution that allows the integration of online payment methods into your application. Supporting various payment methods like credit cards, bank transfers, and e-wallets, Midtrans helps you securely and easily accept payments.
 -   [Mailtrap](https://mailtrap.io) (`Email`): Mailtrap is an email testing service designed to capture test emails sent from your application. With Mailtrap, you can verify and analyze emails without the risk of sending them to real users, making it invaluable in development and testing environments.
 
