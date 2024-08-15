@@ -28,6 +28,7 @@ RUN apt-get update && apt-get -y install apt-utils nano wget dialog vim && apt-g
 COPY . /var/www/laracamp-bwa
 
 RUN chown -R www-data:www-data /var/www/laracamp-bwa
-RUN chmod -R 755 /var/www/laracamp-bwa
+RUN chmod -R 755 /var/www/laracamp-bwa/storage
+RUN chmod -R 755 /var/www/laracamp-bwa/bootstrap/cache
 
 CMD ["php-fpm"]
