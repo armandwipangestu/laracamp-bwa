@@ -1,15 +1,18 @@
 services:
-    # Web Server Service
-    nginx:
-        image: nginx:alpine
-        container_name: nginx
+    # Application Service
+    app:
+        container_name: "laracamp-bwa"
+        build:
+            context: "."
+            dockerfile: Dockerfile
         ports:
-            - "80:80"
+            - "9000:9000"
+        working_dir: "/var/www/laracamp-bwa"
+        environment:
+            DB_HOST: "db"
         volumes:
-            - ".:/var/www/laracamp-bwa"
-            - "./docker-compose/nginx/conf.d/:/etc/nginx/conf.d"
+            - "./:/var/www/laracamp-bwa"
         depends_on:
-            - app
             - db
 
     # Database Service
@@ -61,17 +64,3 @@ services:
     #   environment:
     #     PGADMIN_DEFAULT_EMAIL: '${MAIL_FROM_ADDRESS}'
     #     PGADMIN_DEFAULT_PASSWORD: '${DB_PASSWORD}'
-
-    # Application Service
-    app:
-        container_name: "laracamp-bwa"
-        build:
-            context: "./docker-compose/php"
-            dockerfile: Dockerfile
-        ports:
-            - "9000:9000"
-        working_dir: "/var/www/laracamp-bwa"
-        environment:
-            DB_HOST: "db"
-        volumes:
-            - "./:/var/www/laracamp-bwa"
