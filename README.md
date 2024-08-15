@@ -32,18 +32,15 @@
 -   [Deployment](#deployment)
     -   [Container (Docker Compose)](#container-docker-compose)
         -   [Setup Docker](#setup-docker)
-        -   [Clone the repository](#clone-the-repository)
         -   [Setup .env before build the image](#setup-env-before-build-the-image)
         -   [Build and run the container](#build-and-run-the-container)
         -   [Setup container app (laravel)](#setup-container-app-laravel)
-    -   [Virtual Private Server (VPS)](#virtual-private-server-vps)
-        -   [Cloning the repository](#cloning-the-repository)
+    -   [Running on Host or Virtual Private Server (VPS)](#running-on-host-or-virtual-private-server-vps)
         -   [Update Repository & Upgrade Package](#update-repository--upgrade-package)
         -   [Install necessary package](#install-necessary-package)
         -   [Install composer](#install-composer)
         -   [Configure MariaDB](#configure-mariadb)
         -   [Configure Laravel](#configure-laravel)
-        -   [Configure Nginx](#configure-nginx)
 -   [Git Flow](#git-flow)
     -   [Initialize](#initialize)
     -   [Creating new feature](#creating-new-feature)
@@ -257,9 +254,144 @@ Now you can access the application on `http://localhost:8000`
 
 ## Deployment
 
-### Container (Docker Compose)
+> **NOTE**: In this deployment I'm using VPS Ubuntu 24.04 LTS on Google Compute Engine. We need to clone the repository before all of the process
+>
+> ```bash
+> git clone https://github.com/armandwipangestu/laracamp-bwa.git ~/laracamp-bwa
+> ```
 
-In this container I'm using VPS Ubuntu 24.04 LTS on Google Compute Engine
+1. First you need to have a web server (I'm using nginx) as a front server, the nginx will forward traffic or pass to process manager php-fpm with fastcgi.
+
+2. You can install nginx latest version with this command:
+
+-   Add GPG
+
+```bash
+curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
+    | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+```
+
+-   Add nginx repository
+
+```bash
+echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg arch=amd64] \
+http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" \
+    | sudo tee /etc/apt/sources.list.d/nginx.list
+```
+
+-   Update and install nginx
+
+```bash
+sudo apt update && sudo apt install nginx
+```
+
+3. Setup SSL with Let's encrypt (this is optional, if you want to running with just http you can skip this part)
+
+-   Install snap
+
+```bash
+sudo apt install snapd && sudo snap install core && sudo snap refresh core
+```
+
+-   Install certbot
+
+```bash
+sudo snap install --classic certbot
+```
+
+-   Create a symlink for certbot binary
+
+```bash
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+```
+
+-   Generate SSL Certificate
+
+> **NOTE**: Change the `DOMAIN` variable with your own configuration, you can fill with domain or subdomain. For example `laracamp-bwa.com` or `laracamp.example.com`
+
+The SSL Certificate will stored at `/etc/letsencrypt/live`
+
+```bash
+DOMAIN="laracamp-bwa.com"
+sudo certbot certonly --standalone --agree-tos --no-eff-email --staple-ocsp --preferred-challenges http -m noreply@${DOMAIN} -d ${DOMAIN} --pre-hook="systemctl stop nginx" --post-hook="systemctl start nginx"
+```
+
+-   Improve SSL security exchanges by creating a Diffle-Helman exchange key
+
+```bash
+sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+```
+
+-   Update nginx configuration
+
+> **NOTE**: Choose what your laravel deployment type:
+>
+> 1. Running on host (VPS): If your deployment this type, the nginx configuration at `~/laracamp-bwa/nginx/pass-to-host`
+> 2. Container (docker compose): If your deployment this type, the nginx configuration at `~/laracamp-bwa/nginx/pass-to-container`
+
+You can update nginx configuration on file `laracamp-ssl.conf` or `laracamp.conf` (if you running with http), then update the domain name `laracamp-bwa.com` with your own domain. For example I will choose container deployment with https
+
+```bash
+nvim ~/laracamp-bwa/nginx/pass-to-container/laracamp-ssl.conf
+```
+
+-   Check nginx configuration
+
+Make sure the nginx configuration content have this configuration `include /etc/nginx/sites-enabled/*;`. If not you can manually add
+
+```bash
+cat /etc/nginx/nginx.conf
+```
+
+-   Copy the nginx configuration to `/etc/nginx/sites-available`
+
+Now copy the nginx configuration, for example I will choose container deployment with https
+
+```bash
+sudo cp ~/laracamp-bwa/nginx/pass-to-container/laracamp-ssl.conf /etc/nginx/sites-available
+```
+
+-   Create a symlink nginx configuration to `/etc/nginx/sites-enabled`
+
+Now create the symlink to enable the configuration
+
+```bash
+sudo ln -s /etc/nginx/sites-available/laracamp-ssl.conf /etc/nginx/sites-enabled/laracamp-ssl.conf
+```
+
+After create a symlink, you can check the nginx configuration with this command
+
+```bash
+sudo nginx -t
+```
+
+-   Restart the nginx service
+
+> **NOTE**: Sometimes the nginx got error permission denied to `php8.3-fpm.sock` if your deployment running on host, to fix this you can add uncomment this configuration at `/etc/php/8.3/fpm/pool.d/www.conf`
+>
+> ```conf
+> listen.owner = www-data
+> listen.group = www-data
+> listen.mode = 0660
+> ```
+>
+> then add permission for user `www-data` to `nginx` group
+>
+> ```bash
+> sudo usermod -aG www-data nginx
+> ```
+>
+> Now restart the service
+>
+> ```bash
+> sudo service php8.3-fpm restart
+> ```
+
+```bash
+sudo systemctl restart nginx
+```
+
+### Container (Docker Compose)
 
 #### Setup Docker
 
@@ -290,12 +422,6 @@ sudo usermod -aG docker ${USER} && su - ${USER}
 ```bash
 sudo apt update && sudo apt install docker-ce-cli containerd.io docker-compose-plugin docker-compose
 docker compose version
-```
-
-#### Clone the repository
-
-```bash
-git clone https://github.com/armandwipangestu/laracamp-bwa.git ~/laracamp-bwa
 ```
 
 #### Setup .env before build the image
@@ -333,7 +459,7 @@ docker compose exec app php artisan key:generate
 docker compose exec app php artisan migrate:fresh --seed
 ```
 
-Now you can access the application with your own ip address, example: `http://123.123.123.123`
+Now you can access the application with your own domain
 
 > **NOTE**: If you got an error because permission denied at directory `/var/www/laracamp-bwa/storage` and `/var/www/laracamp-bwa/bootstrap/cache`. You can run this command
 >
@@ -342,17 +468,7 @@ Now you can access the application with your own ip address, example: `http://12
 > docker compose exec app chown -R www-data:www-data /var/www/app/bootstrap/cache
 > ```
 
-### Virtual Private Server (VPS)
-
-> **NOTE**: Do not forget to open the firewall to HTTP/s (80/443) port
-
-In this VPS I'm using Ubuntu 24.04 LTS on Google Compute Engine
-
-#### Cloning the repository
-
-```bash
-git clone https://github.com/armandwipangestu/laracamp-bwa.git ~/laracamp-bwa
-```
+### Running on Host or Virtual Private Server (VPS)
 
 #### Update Repository & Upgrade Package
 
@@ -363,7 +479,7 @@ sudo apt update && sudo apt upgrade
 #### Install necessary package
 
 ```bash
-sudo apt install php-mbstring php-xml php-bcmath php-curl php-cli php-fpm php-mysql unzip mariadb-server nginx
+sudo apt install php-mbstring php-xml php-bcmath php-curl php-cli php-fpm php-mysql unzip mariadb-server
 ```
 
 #### Install composer
@@ -446,32 +562,6 @@ sudo chown -R www-data:www-data /var/www/laracamp-bwa
 ```bash
 sudo chmod -R 755 /var/www/laracamp-bwa/storage
 sudo chmod -R 755 /var/www/laracamp-bwa/bootstrap/cache
-```
-
-#### Configure Nginx
-
-1. Disable default nginx configuration
-
-```bash
-sudo rm /etc/nginx/sites-enabled/default
-```
-
-2. Copy nginx configuration
-
-```bash
-sudo cp ~/laracamp-bwa/nginx/laracamp.conf /etc/nginx/sites-available/laracamp.conf
-```
-
-3. Enable nginx configuration
-
-```bash
-sudo ln -s /etc/nginx/sites-available/laracamp.conf /etc/nginx/sites-enabled/laracamp.conf
-```
-
-4. Restart Nginx service
-
-```bash
-sudo systemctl restart nginx
 ```
 
 Now your application has been running.
