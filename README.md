@@ -466,8 +466,8 @@ Now you can access the application with your own domain
 > **NOTE**: If you got an error because permission denied at directory `/var/www/laracamp-bwa/storage` and `/var/www/laracamp-bwa/bootstrap/cache`. You can run this command
 >
 > ```bash
-> docker compose exec app chown -R www-data:www-data /var/www/app/storage
-> docker compose exec app chown -R www-data:www-data /var/www/app/bootstrap/cache
+> docker compose exec app chown -R www-data:www-data /var/www/laracamp-bwa/storage
+> docker compose exec app chown -R www-data:www-data /var/www/laracamp-bwa/bootstrap/cache
 > ```
 
 ### Running on Host or Virtual Private Server (VPS)
