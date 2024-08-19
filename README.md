@@ -3,7 +3,7 @@
 <div align="center">
 
 ![Laravel](https://img.shields.io/badge/-Laravel-05122A?style=flat&logo=laravel)&nbsp;
-![Socialite](https://img.shields.io/badge/-Laravel%20Socialite-05122A?style=flat&logo=auth0)&nbsp;
+![Socialite](https://img.shields.io/badge/-Socialite-05122A?style=flat&logo=auth0)&nbsp;
 ![Docker](https://img.shields.io/badge/-Docker-05122A?style=flat&logo=docker)&nbsp;
 ![Midtrans](https://img.shields.io/badge/-Midtrans-05122A?style=flat&logo=visa)&nbsp;
 ![Mailtrap](https://img.shields.io/badge/-Mailtrap-05122A?style=flat&logo=mailtrap)&nbsp;
@@ -12,7 +12,7 @@
 
 <img src="assets/preview.png" alt="Preview">
 
-<p align="center">This repository is web application that aims to provide various features such as authentication, authorization, payment gateway, and email integration. This app is built using Laravel, Breeze (Authentication and Authorization), Socialite (OAuth Google), Midtrans (Payment Gateway), Mailtrap (Email)</p>
+<p align="center">This repository is web application that aims to provide various features such as authentication, authorization, payment gateway, and email integration. This app is built using Laravel, Breeze (Authentication and Authorization), Socialite (OAuth Google), Midtrans (Payment Gateway), Mailtrap (Email), Docker</p>
 
 ## Table of Contents
 
