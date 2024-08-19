@@ -5,6 +5,7 @@
 ![Laravel](https://img.shields.io/badge/-Laravel-05122A?style=flat&logo=laravel)&nbsp;
 ![Socialite](https://img.shields.io/badge/-Socialite-05122A?style=flat&logo=auth0)&nbsp;
 ![Docker](https://img.shields.io/badge/-Docker-05122A?style=flat&logo=docker)&nbsp;
+![Nginx](https://img.shields.io/badge/-Nginx-05122A?style=flat&logo=nginx)&nbsp;
 ![Midtrans](https://img.shields.io/badge/-Midtrans-05122A?style=flat&logo=visa)&nbsp;
 ![Mailtrap](https://img.shields.io/badge/-Mailtrap-05122A?style=flat&logo=mailtrap)&nbsp;
 
